@@ -102,6 +102,6 @@ class BlogController extends Controller
         $blog->delete();
   
         return redirect()->route('blogs.index')
-                        ->with('success','Blogs deleted successfully');
+                        ->with('success','Blo deleted successfully');
     }
 }
