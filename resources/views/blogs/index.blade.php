@@ -31,11 +31,11 @@
             <td>{{ $blog->title }}</td>
             <td>{{ $blog->description }}</td>
             <td>
-                <form action="{{ route('blogs.destroy',$blog->id) }}" method="POST">
+                <form action="{{ route('blogs.destroy', $blog->id) }}" method="POST">
    
-                    <a class="btn btn-info" href="{{ route('blogs.show',$blog->id) }}">Show</a>
+                    <a class="btn btn-info" href="{{ route('blogs.show', $blog->id) }}">Show</a>
     
-                    <a class="btn btn-primary" href="{{ route('blogs.edit',$blog->id) }}">Edit</a>
+                    <a class="btn btn-primary" href="{{ route('blogs.edit', $blog->id) }}">Edit</a>
    
                     @csrf
                     @method('DELETE')
