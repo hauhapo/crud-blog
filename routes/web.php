@@ -15,4 +15,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('blogs','BlogController');
+Route::resource('blogs', 'BlogController');
