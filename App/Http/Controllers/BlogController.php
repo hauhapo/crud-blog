@@ -1,10 +1,13 @@
 <?php
-  
+
 namespace App\Http\Controllers;
-  
-use App\Blog;
+
+use App\Models\Blog;
 use Illuminate\Http\Request;
-  
+use App\Http\Requests\BlogStoreRequest;
+use App\Http\Requests\BlogUpdateRequest;
+
+
 class BlogController extends Controller
 {
     /**
@@ -15,11 +18,11 @@ class BlogController extends Controller
     public function index()
     {
         $blogs = Blog::latest()->paginate(5);
-  
+
         return view('blogs.index',compact('blogs'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+        ->with('i', (request()->input('page', 1) - 1) * 5);
     }
-   
+
     /**
      * Show the form for creating a new resource.
      *
@@ -29,26 +32,23 @@ class BlogController extends Controller
     {
         return view('blogs.create');
     }
-  
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BlogStoreRequest $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-        ]);
-  
+
+
         Blog::create($request->all());
-   
+
         return redirect()->route('blogs.index')
-                        ->with('success','Blog created successfully.');
+        ->with('success','Blog created successfully.');
     }
-   
+
     /**
      * Display the specified resource.
      *
@@ -59,7 +59,7 @@ class BlogController extends Controller
     {
         return view('blogs.show',compact('blog'));
     }
-   
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -70,7 +70,7 @@ class BlogController extends Controller
     {
         return view('blogs.edit',compact('blog'));
     }
-  
+
     /**
      * Update the specified resource in storage.
      *
@@ -78,19 +78,15 @@ class BlogController extends Controller
      * @param  \App\Blog  $blog
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Blog $blog)
+    public function update(BlogUpdateRequest $request, Blog $blog)
     {
-        $request->validate([
-            'title' => 'required',
-            'description' => 'required',
-        ]);
-  
+
         $blog->update($request->all());
-  
+
         return redirect()->route('blogs.index')
-                        ->with('success','Blog updated successfully');
+        ->with('success','Blog updated successfully');
     }
-  
+
     /**
      * Remove the specified resource from storage.
      *
@@ -100,8 +96,8 @@ class BlogController extends Controller
     public function destroy(Blog $blog)
     {
         $blog->delete();
-  
+
         return redirect()->route('blogs.index')
-                        ->with('success','Blo deleted successfully');
+        ->with('success','Blog deleted successfully');
     }
 }
